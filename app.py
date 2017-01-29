@@ -41,6 +41,7 @@ def automate(url):
         return False
 
     extract_data(savepath)
+    return True
 
 
 root = Tk()
