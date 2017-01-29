@@ -15,8 +15,14 @@ def run_automation():
         return
 
     AutomationButton.config(state=DISABLED)
-    automate(url)
-    messagebox.showinfo('RESULT', url)
+    is_success = automate(url)
+    AutomationButton.config(state=NORMAL)
+
+    if is_success:
+        messagebox.showinfo(
+            'SUCCESS', 'Extracted data is a newest file at C:\Extractedb data')
+    else:
+        messagebox.showerror('ERROR', 'Cannot extract data')
 
 
 def automate(url):
@@ -24,8 +30,11 @@ def automate(url):
     if not download_url:
         return False
 
-    savedir = 'C:/Extracted Excel'
-    filename = datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")
+    savedir = os.path.abspath('C:/Extracted Excel')
+    if not os.path.exists(savedir):
+        os.mkdir(savedir)
+
+    filename = datetime.datetime.now().strftime("%d-%m-%Y-%H-%M-%S.xlsx")
     savepath = os.path.join(savedir, filename)
     is_success = download_file_from_url(download_url, savepath)
     if not is_success:

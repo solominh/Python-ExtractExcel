@@ -10,9 +10,14 @@ def find_downloadurl_in(url):
         return None
 
     soup = bs4.BeautifulSoup(res.text, 'html.parser')
-    css_selector = '#center-content > div.box-ketqua > div > table > tr:nth-of-type(11) > td:nth-of-type(2) > em'
+    css_selector = '#post-body-318540220416044168 > a'
     elements = soup.select(css_selector)
-    return elements[0].text.strip()
+    if not elements:
+        return None
+
+    a_element = elements[0]
+    url = a_element['href']
+    return url
 
 
 def download_file_from_url(url, savepath):
@@ -22,6 +27,6 @@ def download_file_from_url(url, savepath):
     except:
         return False
 
-    with open(savepath, 'w') as f:
+    with open(savepath, 'wb') as f:
         f.write(res.content)
     return True
