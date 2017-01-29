@@ -2,12 +2,12 @@ import bs4
 import requests
 
 
-def find_downloadurl_in_(url):
+def find_downloadurl_in(url):
     res = requests.get(url)
     try:
         res.raise_for_status()
     except:
-        return False
+        return None
 
     soup = bs4.BeautifulSoup(res.text, 'html.parser')
     css_selector = '#center-content > div.box-ketqua > div > table > tr:nth-of-type(11) > td:nth-of-type(2) > em'
