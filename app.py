@@ -1,14 +1,16 @@
-from tkinter import Tk, Frame, Label, Entry, Button, messagebox, LEFT, RIGHT, TOP, BOTTOM
+from tkinter import Tk, Frame, Label, Entry, Button, messagebox, LEFT, RIGHT, TOP, BOTTOM, NORMAL,DISABLED
 import validators
 
 
 def run_automation():
-    global URLEntry
+    global URLEntry, AutomationButton
+    
     url = URLEntry.get()
     if not validators.url(url) == True:
         messagebox.showerror('ERROR', 'Please enter a valid URL')
         return
 
+    AutomationButton.config(state=DISABLED)
     messagebox.showinfo('RESULT', url)
 
 
